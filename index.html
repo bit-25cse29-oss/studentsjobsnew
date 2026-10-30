@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudentJobs - Jobs & Internships Portal</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+    color: #222;
+}
+
+header {
+    background: #14213d;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #38bdf8;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+.hero {
+    background: linear-gradient(135deg, #14213d, #2563eb);
+    color: white;
+    text-align: center;
+    padding: 65px 20px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.search-box {
+    max-width: 650px;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 7px;
+    outline: none;
+}
+
+.search-box button {
+    padding: 14px 22px;
+    border: none;
+    border-radius: 7px;
+    background: #38bdf8;
+    color: #14213d;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+    padding: 25px;
+    background: white;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat h2 {
+    color: #2563eb;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.section-title h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.filter-btn {
+    padding: 10px 18px;
+    border: 1px solid #2563eb;
+    background: white;
+    color: #2563eb;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.job-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px #0000000d;
+    transition: 0.2s;
+}
+
+.job-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px #00000015;
+}
+
+.job-card h3 {
+    margin-bottom: 10px;
+    color: #14213d;
+}
+
+.company {
+    color: #2563eb;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.details {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.tag {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin: 12px 0;
+}
+
+.apply-btn {
+    display: block;
+    text-align: center;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 11px;
+    border-radius: 7px;
+    margin-top: 12px;
+}
+
+.apply-btn:hover {
+    background: #14213d;
+}
+
+.no-results {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    display: none;
+}
+
+footer {
+    background: #14213d;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+footer p {
+    margin: 7px;
+}
+
+@media (max-width: 600px) {
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    nav a {
+        margin: 0 7px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Student<span>Jobs</span></div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#jobs">Internships</a>
+        <a href="#about">About</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>Find Your Dream Job & Internship</h1>
+
+    <p>
+        Explore opportunities from top companies and start your career.
+    </p>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search job, company or location..."
+        >
+
+        <button onclick="searchJobs()">Search</button>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat">
+        <h2>500+</h2>
+        <p>Jobs</p>
+    </div>
+
+    <div class="stat">
+        <h2>250+</h2>
+        <p>Internships</p>
+    </div>
+
+    <div class="stat">
+        <h2>100+</h2>
+        <p>Companies</p>
+    </div>
+
+    <div class="stat">
+        <h2>10K+</h2>
+        <p>Students</p>
+    </div>
+</section>
+
+<main class="container" id="jobs">
+
+    <div class="section-title">
+        <h2>Latest Opportunities</h2>
+        <p>Find jobs and internships according to your skills.</p>
+    </div>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterJobs('all', this)">
+            All
+        </button>
+
+        <button class="filter-btn" onclick="filterJobs('job', this)">
+            Jobs
+        </button>
+
+        <button class="filter-btn" onclick="filterJobs('internship', this)">
+            Internships
+        </button>
+
+        <button class="filter-btn" onclick="filterJobs('remote', this)">
+            Remote
+        </button>
+
+        <button class="filter-btn" onclick="filterJobs('fresher', this)">
+            Fresher
+        </button>
+    </div>
+
+    <div class="job-grid" id="jobGrid">
+
+        <!-- Job 1 -->
+        <div class="job-card"
+             data-type="job"
+             data-location="noida"
+             data-level="fresher">
+
+            <h3>Frontend Developer</h3>
+
+            <div class="company">Google</div>
+
+            <div class="details">
+                📍 Noida<br>
+                💼 Full Time<br>
+                🎓 Fresher / Experienced
+            </div>
+
+            <span class="tag">Job</span>
+
+            <a class="apply-btn"
+               href="https://www.google.com/about/careers/applications/"
+               target="_blank">
+               Apply Now
+            </a>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="job-card"
+             data-type="job"
+             data-location="bangalore"
+             data-level="fresher">
+
+            <h3>Software Developer</h3>
+
+            <div class="company">Microsoft</div>
+
+            <div class="details">
+                📍 Bangalore<br>
+                💼 Full Time<br>
+                🎓 Fresher / Experienced
+            </div>
+
+            <span class="tag">Job</span>
+
+            <a class="apply-btn"
+               href="https://careers.microsoft.com/"
+               target="_blank">
+               Apply Now
+            </a>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="job-card"
+             data-type="job"
+             data-location="remote"
+             data-level="fresher">
+
+            <h3>Web Developer</h3>
+
+            <div class="company">TCS</div>
+
+            <div class="details">
+                📍 Multiple Locations<br>
+                💼 Full Time<br>
+                🎓 Fresher
+            </div>
+
+            <span class="tag">Job</span>
+
+            <a class="apply-btn"
+               href="https://www.tcs.com/careers"
+               target="_blank">
+               Apply Now
+            </a>
+        </div>
+
+        <!-- Job 4 -->
+        <div class="job-card"
+             data-type="job"
+             data-location="bangalore"
+             data-level="fresher">
+
+            <h3>Software Engineer</h3>
+
+            <div class="company">Amazon</div>
+
+            <div class="details">
+                📍 Bangalore<br>
+                💼 Full Time<br>
+                🎓 Fresher / Experienced
+            </div>
+
+            <span class="tag">Job</span>
+
+            <a class="apply-btn"
+               href="https://www.amazon.jobs/"
+               target="_blank">
+               Apply Now
+            </a>
+        </div>
+
+        <!-- Internship 1 -->
+        <div class="job-card"
+             data-type="internship"
+             data-location="remote"
+             data-level="fresher">
+
+            <h3>Web Development Intern</h3>
+
+            <div class="company">Infosys</div>
+
+            <div class="details">
+                📍 Remote / India<br>
+                💼 Internship<br>
+                🎓 Students
+            </div>
+
+            <span class="tag">Internship</span>
+
+           <a href="https://www.google.com/about/careers/applications/jobs/results/?location=India&q=Software%20Engineer"
+target="_blank">Apply Now</a>
+        </div>
+
+        <!-- Internship 2 -->
+        <div class="job-card"
+             data-type="internship"
+             data-location="remote"
+             data-level="fresher">
+
+            <h3>Java Developer Intern</h3>
+
+            <div class="company">IBM</div>
+
+            <div class="details">
+                📍 Remote / India<br>
+                💼 Internship<br>
+                🎓 Students
+            </div>
+
+            <span class="tag">Internship</span>
+
+            <a class="apply-btn"
+               href="https://www.ibm.com/careers"
+               target="_blank">
+               Apply Now
+            </a>
+        </div>
+
+        <!-- Internship 3 -->
+        <div class="job-card"
+             data-type="internship"
+             data-location="noida"
+             data-level="fresher">
+
+            <h3>Data Science Intern</h3>
+
+            <div class="company">Adobe</div>
+
+            <div class="details">
+                📍 Noida<br>
+                💼 Internship<br>
+                🎓 Students
+            </div>
+
+            <span class="tag">Internship</span>
+
+            <a class="apply-btn"
+               href="https://careers.adobe.com/"
+               target="_blank">
+               Apply Now
+            </a>
+        </div>
+
+        <!-- Internship 4 -->
+        <div class="job-card"
+             data-type="internship"
+             data-location="remote"
+             data-level="fresher">
+
+            <h3>Software Intern</h3>
+
+            <div class="company">Accenture</div>
+
+            <div class="details">
+                📍 India / Remote<br>
+                💼 Internship<br>
+                🎓 Students
+            </div>
+
+            <span class="tag">Internship</span>
+
+            <a class="apply-btn"
+               href="https://www.accenture.com/in-en/careers"
+               target="_blank">
+               Apply Now
+            </a>
+        </div>
+
+    </div>
+
+    <div class="no-results" id="noResults">
+        <h3>No opportunities found!</h3>
+        <p>Try another search or filter.</p>
+    </div>
+
+</main>
+
+<section class="container" id="about">
+    <div class="section-title">
+        <h2>About StudentJobs</h2>
+
+        <p>
+            StudentJobs is a student-focused job and internship portal.
+            It helps students discover career opportunities from different
+            companies and visit their official career websites to apply.
+        </p>
+    </div>
+</section>
+
+<footer>
+    <h3>StudentJobs</h3>
+
+    <p>Jobs & Internships Portal</p>
+
+    <p>Mini Project | B.Tech 2nd Year</p>
+
+    <p>© 2026 StudentJobs. All Rights Reserved.</p>
+</footer>
+
+<script>
+
+let currentFilter = "all";
+
+function searchJobs() {
+    showJobs();
+}
+
+function filterJobs(type, button) {
+    currentFilter = type;
+
+    document.querySelectorAll(".filter-btn").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    showJobs();
+}
+
+function showJobs() {
+
+    let searchText = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    let cards = document.querySelectorAll(".job-card");
+
+    let visibleCount = 0;
+
+    cards.forEach(function(card) {
+
+        let title = card.querySelector("h3").innerText.toLowerCase();
+
+        let company = card.querySelector(".company").innerText.toLowerCase();
+
+        let location = card.dataset.location.toLowerCase();
+
+        let type = card.dataset.type;
+
+        let level = card.dataset.level;
+
+        let matchesSearch =
+            title.includes(searchText) ||
+            company.includes(searchText) ||
+            location.includes(searchText);
+
+        let matchesFilter = true;
+
+        if (currentFilter === "job") {
+            matchesFilter = type === "job";
+        }
+
+        else if (currentFilter === "internship") {
+            matchesFilter = type === "internship";
+        }
+
+        else if (currentFilter === "remote") {
+            matchesFilter = location === "remote";
+        }
+
+        else if (currentFilter === "fresher") {
+            matchesFilter = level === "fresher";
+        }
+
+        if (matchesSearch && matchesFilter) {
+            card.style.display = "block";
+            visibleCount++;
+        }
+
+        else {
+            card.style.display = "none";
+        }
+
+    });
+
+    document.getElementById("noResults").style.display =
+        visibleCount === 0 ? "block" : "none";
+}
+
+document
+    .getElementById("searchInput")
+    .addEventListener("keyup", showJobs);
+
+</script>
+
+</body>
+</html>
